@@ -1,0 +1,117 @@
+<html>
+	<head>
+		<title>jQuery!!</title>
+		<style>
+			.circle {
+				width: 200px;
+				height: 200px;
+				border-radius: 100px;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+			}
+			
+			.red {
+				background-color: red;
+			}
+			
+			.blue {
+				background-color: blue;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+		
+			<p id='special'>This is a very special paragraph!</p>
+			<p id='points'></p>
+		
+			<div class="circle red"></div>
+			<div class="circle blue"></div>
+			<div class="circle blue"></div>
+	
+		</div>
+		
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="js/jquery.tubular.1.0.js"></script>
+		<script>
+			$('#wrapper').tubular({
+				videoId: 'MaEyWOI7Abs'
+			});
+			
+			var currentPoints = 0;
+			var circles = $(".circle");
+			var points = $("#points");
+			
+			$(circles).each(function() {
+				//console.log(this);
+				$(this).click(determinePoints);
+			});
+			
+			setInterval(function(){
+				moveCircles();
+			}, 1000);
+			
+			function moveCircles() {
+				$(circles).each(function() {
+				
+					// generate random numbers
+					var random_x = Math.floor(Math.random() * 100);
+					var random_y = Math.floor(Math.random() * 100);
+					
+					// apply them as CSS %s to circle 
+					$(this).css('top', `${random_y}%`).css('left', `${random_x}%`);
+				
+					//console.log(this);
+				});
+			}
+			
+			function determinePoints(event) {
+				// need to figure out if we clicked a red
+				// circle or a blue circle
+				console.log("CLICKED A CIRCLE", event.target);
+				
+				if( $(event.target).hasClass('blue') ) { 
+					// you get 5 points 
+					updatePoints(5);
+				} else {
+					// you get 10 points
+					updatePoints(10);
+				}				
+			}
+			
+			function updatePoints(newPoints){
+				console.log("About to get new points!", newPoints);
+			
+				// currentPoints = currentPoints + newPoints;
+				currentPoints += newPoints;
+				
+				$(points).text(currentPoints);
+				
+				// check localStorage for points, update if you have more
+				// add a timer to the game using setInterval and a variable for seconds elapsed
+				// make circles disappear after they've been clicked
+				// replace circles with images 
+			}
+			
+			moveCircles();
+			
+	
+			// old busted way 
+			//var special_paragraph = document.getElementById("special");
+			//special_paragraph.innerText = "Text has been changed!";
+			//special_paragraph.style.color = "red";
+			//special_paragraph.style.fontSize = "200px";
+			
+			// new hotness
+			//var special_paragraph = $("#special");
+			//$(special_paragraph)
+			//	.text('Text has been changed by jQuery!')
+			//	.css('color', 'red')
+			//	.css('font-size', '200px');
+				
+			
+			
+		</script>
+	</body>
+</html>
